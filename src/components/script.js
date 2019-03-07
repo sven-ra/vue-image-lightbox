@@ -95,6 +95,7 @@ export default {
       select: this.startAt,
       lightBoxOn: this.showLightBox,
       timer: null,
+      zoomed: false
     }
   },
 
@@ -206,6 +207,7 @@ export default {
 
     closeLightBox() {
       this.$set(this, 'lightBoxOn', false)
+      this.$set(this, 'zoomed', false)
     },
 
     nextImage() {
@@ -215,6 +217,34 @@ export default {
     previousImage() {
       this.$set(this, 'select', (this.select + this.images.length - 1) % this.images.length)
     },
+
+    toggleZoomImage() {
+      if (!this.zoomed) {
+        this.$set(this, 'zoomed', true)
+
+        const $vueLbFigure = this.$refs.lbFigure
+        var paddingTop, paddingLeft
+
+        const windowWidth = window.innerWidth
+        if (this.images[this.select].src.width > windowWidth) {
+          paddingLeft = (this.images[this.select].src.width - windowWidth) / 2
+        } else {
+          paddingLeft = 0
+        }
+        const windowHeight = window.innerHeight
+        if (this.images[this.select].src.height > windowHeight) {
+          paddingTop = (this.images[this.select].src.height - windowHeight) / 2
+        } else {
+          paddingTop = 0
+        }
+        setTimeout(function () {
+          $vueLbFigure.scrollTop = paddingTop
+          $vueLbFigure.scrollLeft = paddingLeft
+        }, 10)
+      } else {
+        this.$set(this, 'zoomed', false)
+      }
+    }
   },
 
   beforeDestroy() {

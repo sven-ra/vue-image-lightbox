@@ -67,10 +67,15 @@
   position: relative;
 }
 
+.m-zoomed .vue-lb-figure {
+  overflow: scroll;
+  width: 100vw;
+  height: 100vh;
+}
+
 img.vue-lb-modal-image {
   cursor: pointer;
   max-height: calc(100vh - 140px);
-  cursor: pointer;
   display: block;
   height: auto;
   margin: 0 auto;
@@ -79,6 +84,19 @@ img.vue-lb-modal-image {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  cursor: pointer;
+  cursor: zoom-in;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+}
+
+.m-zoomed img.vue-lb-modal-image {
+  max-width: none;
+  max-height: none;
+  cursor: pointer;
+  cursor: zoom-out;
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
 }
 
 .vue-lb-info {
@@ -93,6 +111,9 @@ img.vue-lb-modal-image {
   text-align: center;
 }
 
+.m-zoomed .vue-lb-info {
+  display: none;
+}
 
 .vue-lb-footer {
   box-sizing: border-box;
@@ -114,6 +135,10 @@ img.vue-lb-modal-image {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   -webkit-box-pack: justify;
+}
+
+.m-zoomed .vue-lb-footer {
+  display: none;
 }
 
 .vue-lb-footer-info {
