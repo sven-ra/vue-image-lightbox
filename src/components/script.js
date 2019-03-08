@@ -223,23 +223,13 @@ export default {
         this.$set(this, 'zoomed', true)
 
         const $vueLbFigure = this.$refs.lbFigure
-        var paddingTop, paddingLeft
-
         const windowWidth = window.innerWidth
-        if (this.images[this.select].src.width > windowWidth) {
-          paddingLeft = (this.images[this.select].src.width - windowWidth) / 2
-        } else {
-          paddingLeft = 0
-        }
         const windowHeight = window.innerHeight
-        if (this.images[this.select].src.height > windowHeight) {
-          paddingTop = (this.images[this.select].src.height - windowHeight) / 2
-        } else {
-          paddingTop = 0
-        }
+        const imageRatio = this.images[this.select].height / this.images[this.select].width
+        const zoomedLightBoxHeight = windowWidth * imageRatio
+
         setTimeout(function () {
-          $vueLbFigure.scrollTop = paddingTop
-          $vueLbFigure.scrollLeft = paddingLeft
+          $vueLbFigure.scrollTop = (zoomedLightBoxHeight - windowHeight) / 2
         }, 10)
       } else {
         this.$set(this, 'zoomed', false)

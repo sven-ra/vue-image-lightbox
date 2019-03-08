@@ -10,9 +10,10 @@
       <div class="vue-lb-header">
         <span></span>
         <button
-        type="button"
-        :title="closeText"
-        class="vue-lb-button-close"
+          type="button"
+          :title="closeText"
+          class="vue-lb-button-close"
+          @click.stop="closeLightBox"
         >
           <slot name="close">
             <span>
@@ -27,42 +28,55 @@
       <div
         class="vue-lb-figure"
         ref="lbFigure"
-        @click.stop="toggleZoomImage"
       >
-        <transition
-          mode="out-in"
-          name="fade"
-        >
-          <img
-            :key="images[select].src"
-            :src="images[select].src"
-            :srcset="images[select].srcset || ''"
-            class="vue-lb-modal-image"
+        <div class="vue-lb-image-wrapper">
+          <transition
+            mode="out-in"
+            name="fade"
           >
-        </transition>
+            <img
+              :key="images[select].src"
+              :src="images[select].src"
+              :srcset="images[select].srcset || ''"
+              class="vue-lb-modal-image"
+              @click.stop="toggleZoomImage"
+            >
+          </transition>
+        </div>
 
-        <div
-          class="vue-lb-info"
-          v-html="images[select].caption"
-          v-show="showCaption"
-        ></div>
 
         <div class="vue-lb-footer">
-          <div class="vue-lb-footer-info"></div>
-          <div class="vue-lb-footer-count">
-            <slot name="footer"
-                  :current="select + 1"
-                  :total="images.length"
+          <div
+            class="vue-lb-info"
+            v-html="images[select].caption"
+            v-show="showCaption"
+          ></div>
+
+          <div class="vue-lb-footer-right">
+            <button
+              type="button"
+              class="vue-lb-button-zoom"
+              @click.stop="toggleZoomImage"
             >
-              {{ select + 1 }} / {{ images.length }}
-            </slot>
+              <slot name="zoom">
+                Zoom
+              </slot>
+            </button> <!-- .vue-lb-button-zoom -->
+            <div class="vue-lb-footer-count">
+              <slot name="footer"
+                    :current="select + 1"
+                    :total="images.length"
+              >
+                {{ select + 1 }} / {{ images.length }}
+              </slot>
+            </div>
           </div>
         </div>
 
       </div>
     </div> <!-- .vue-lb-content -->
-    <div class="vue-lb-thumbnail-wrapper">
-    <div v-if="showThumbs" class="vue-lb-thumbnail">
+    <div v-if="showThumbs" class="vue-lb-thumbnail-wrapper">
+    <div class="vue-lb-thumbnail">
       <button
         v-if="images.length > 1"
         type="button"
